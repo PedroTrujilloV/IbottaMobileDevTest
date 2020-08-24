@@ -8,11 +8,11 @@
 
 import Foundation
 
-struct Offer {
-    var id :Int
-    var url :String
-    var name :String
-    var description :String
-    var terms :String
-    var current_value :String 
+struct Offer: Decodable, Hashable {
+    var id :String?
+    var url :String?
+    var name :String?
+    var description :String?
+    var terms :String?
+    var current_value :String?
 }

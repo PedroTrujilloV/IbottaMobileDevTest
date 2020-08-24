@@ -10,6 +10,11 @@
 		37E9862324F4221E00BB4B67 /* Offers.json in Resources */ = {isa = PBXBuildFile; fileRef = 37E9862224F4221E00BB4B67 /* Offers.json */; };
 		37E9862624F423D900BB4B67 /* OffersStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37E9862524F423D900BB4B67 /* OffersStore.swift */; };
 		37E9862824F4260900BB4B67 /* Offer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37E9862724F4260900BB4B67 /* Offer.swift */; };
+		37E9862A24F4275F00BB4B67 /* OfferViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37E9862924F4275F00BB4B67 /* OfferViewModel.swift */; };
+		37E9862C24F42B9300BB4B67 /* OfferModelTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37E9862B24F42B9300BB4B67 /* OfferModelTest.swift */; };
+		37E9862E24F4419200BB4B67 /* OfferViewModelTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37E9862D24F4419200BB4B67 /* OfferViewModelTest.swift */; };
+		37E9863224F4639900BB4B67 /* StoreProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37E9863124F4639900BB4B67 /* StoreProtocol.swift */; };
+		37E9863424F4659200BB4B67 /* OfferStoreTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37E9863324F4659200BB4B67 /* OfferStoreTest.swift */; };
 		37EC3F2A24F41E0B00C37BB1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37EC3F2924F41E0B00C37BB1 /* AppDelegate.swift */; };
 		37EC3F2C24F41E0B00C37BB1 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37EC3F2B24F41E0B00C37BB1 /* SceneDelegate.swift */; };
 		37EC3F2E24F41E0B00C37BB1 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37EC3F2D24F41E0B00C37BB1 /* ViewController.swift */; };
@@ -33,6 +38,11 @@
 		37E9862224F4221E00BB4B67 /* Offers.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = Offers.json; path = ../../../IbottaMobileDevTest/data/Offers.json; sourceTree = "<group>"; };
 		37E9862524F423D900BB4B67 /* OffersStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OffersStore.swift; sourceTree = "<group>"; };
 		37E9862724F4260900BB4B67 /* Offer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Offer.swift; sourceTree = "<group>"; };
+		37E9862924F4275F00BB4B67 /* OfferViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OfferViewModel.swift; sourceTree = "<group>"; };
+		37E9862B24F42B9300BB4B67 /* OfferModelTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OfferModelTest.swift; sourceTree = "<group>"; };
+		37E9862D24F4419200BB4B67 /* OfferViewModelTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OfferViewModelTest.swift; sourceTree = "<group>"; };
+		37E9863124F4639900BB4B67 /* StoreProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreProtocol.swift; sourceTree = "<group>"; };
+		37E9863324F4659200BB4B67 /* OfferStoreTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OfferStoreTest.swift; sourceTree = "<group>"; };
 		37EC3F2624F41E0B00C37BB1 /* IbottaiOSMobileDevTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = IbottaiOSMobileDevTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		37EC3F2924F41E0B00C37BB1 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		37EC3F2B24F41E0B00C37BB1 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -82,6 +92,7 @@
 		37E9862024F4218200BB4B67 /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
+				37E9862924F4275F00BB4B67 /* OfferViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -91,6 +102,7 @@
 			children = (
 				37E9862224F4221E00BB4B67 /* Offers.json */,
 				37E9862524F423D900BB4B67 /* OffersStore.swift */,
+				37E9863124F4639900BB4B67 /* StoreProtocol.swift */,
 			);
 			path = Store;
 			sourceTree = "<group>";
@@ -144,6 +156,9 @@
 			children = (
 				37EC3F4024F41E1200C37BB1 /* IbottaiOSMobileDevTestTests.swift */,
 				37EC3F4224F41E1200C37BB1 /* Info.plist */,
+				37E9862B24F42B9300BB4B67 /* OfferModelTest.swift */,
+				37E9862D24F4419200BB4B67 /* OfferViewModelTest.swift */,
+				37E9863324F4659200BB4B67 /* OfferStoreTest.swift */,
 			);
 			path = IbottaiOSMobileDevTestTests;
 			sourceTree = "<group>";
@@ -250,11 +265,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				37E9863224F4639900BB4B67 /* StoreProtocol.swift in Sources */,
 				37EC3F2E24F41E0B00C37BB1 /* ViewController.swift in Sources */,
 				37EC3F2A24F41E0B00C37BB1 /* AppDelegate.swift in Sources */,
 				37E9862624F423D900BB4B67 /* OffersStore.swift in Sources */,
 				37EC3F2C24F41E0B00C37BB1 /* SceneDelegate.swift in Sources */,
 				37E9862824F4260900BB4B67 /* Offer.swift in Sources */,
+				37E9862A24F4275F00BB4B67 /* OfferViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -262,6 +279,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				37E9862E24F4419200BB4B67 /* OfferViewModelTest.swift in Sources */,
+				37E9862C24F42B9300BB4B67 /* OfferModelTest.swift in Sources */,
+				37E9863424F4659200BB4B67 /* OfferStoreTest.swift in Sources */,
 				37EC3F4124F41E1200C37BB1 /* IbottaiOSMobileDevTestTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

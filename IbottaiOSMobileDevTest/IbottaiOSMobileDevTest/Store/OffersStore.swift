@@ -9,44 +9,54 @@
 import Foundation
 import Combine
 
-class OffersStore:ObservableObject {
+
+enum StoreError: Error {
+    case DataFoundNil(String)
+}
+
+class OffersStore: ObservableObject {
     
-    @Published var objectList:Array<Any> = []
+    /** # For functional reactive programming (Published)*/
     
-    init() {
-        
+    var didChange = PassthroughSubject<OffersStore,Never>()
+    @Published  var objectList:Array<OfferViewModel> = [] {
+        didSet{
+            didChange.send(self)
+        }
     }
     
-    private func load(){
-        
+    
+    /** # For imperative programming (Delegate)*/
+    
+    private weak var delegate:StoreDelegate?
+    
+    init(delegate:StoreDelegate) {
+        self.delegate = delegate
+         load()
+    }
+    
+    init() {
+        load()
+    }
+    
+   func load(){
         if let url = Bundle.main.url(forResource: "Offers", withExtension: "json") {
             do {
-                if let data = try? Data(contentsOf: url) {
+                if let data = try? Data(contentsOf: url){
                     let decoder = JSONDecoder()
-                    
+                    self.objectList = try decoder.decode([Offer].self, from: data)
+                        .map({ (offer) -> OfferViewModel in
+                            let anOfferVM = OfferViewModel(model: offer)
+                            return anOfferVM
+                        })
+                    self.delegate?.storeDidLoad(offers: self.objectList)
+                } else {
+                    throw StoreError.DataFoundNil("Problem getting data from url: \(url)")
                 }
-                
             } catch  {
                 print("OffersStore.load(): \(error)")
             }
         }
-//        if let url = Bundle.main.url(forResource: "form", withExtension: "plist") {
-//           do {
-//               var cellVMs: [CellViewModel] = []
-//               if let data =  try? Data(contentsOf: url) {
-//                   let decoder = PropertyListDecoder()
-//                   cellVMs = try decoder.decode([CellModel].self, from: data)
-//                       .map({ (cellM) -> CellViewModel in
-//                           let aCellVM = CellViewModel(cellModel: cellM)
-//                           aCellVM.makeBinding(with: formVM)
-//                           return aCellVM
-//                       })
-//               }
-//               snapshotForCurrentState(cells: cellVMs)
-//           } catch {
-//               print("FormViewController.loadPlist(): problem \(error)")
-//           }
-//       }
     }
     
 }
