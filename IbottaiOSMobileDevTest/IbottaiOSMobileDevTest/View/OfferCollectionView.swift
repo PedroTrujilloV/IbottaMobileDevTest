@@ -18,11 +18,10 @@ class OfferCollectionView: UICollectionView {
     
     private func setup() {
         self.register(OfferCollectionViewCell.self, forCellWithReuseIdentifier: OfferCollectionViewCell.reuserIdentifier)
-        self.backgroundColor = UIColor.systemPink
+        self.backgroundColor = UIColor.systemBackground
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 }
-
