@@ -9,6 +9,12 @@
 import UIKit
 import Combine
 
+enum LoadingState {
+    case notLoading
+    case loading
+    case loaded(UIImage)
+}
+
 class OfferCollectionViewCell: UICollectionViewCell {
     
     static let reuserIdentifier: String = "OfferCollectionViewCellReuserIdentifier"
@@ -19,9 +25,10 @@ class OfferCollectionViewCell: UICollectionViewCell {
     private var imageView = UIImageView()
     private var textTitle = UILabel()
     private var textDescription = UILabel()
+    private let activityIndicator = UIActivityIndicatorView(style: UIActivityIndicatorView.Style.medium)
     
     private let stackView   = UIStackView()
-    private let stackViewText   = UIStackView()
+    private let textStackView   = UIStackView()
 
 
     override init(frame: CGRect) {
@@ -68,14 +75,14 @@ class OfferCollectionViewCell: UICollectionViewCell {
     
     func setupStackView(){
         
-        stackViewText.axis  = NSLayoutConstraint.Axis.vertical
-        stackViewText.distribution  = UIStackView.Distribution.equalSpacing
-        stackViewText.alignment = UIStackView.Alignment.center
-        stackViewText.spacing   = 3.0
+        textStackView.axis  = NSLayoutConstraint.Axis.vertical
+        textStackView.distribution  = UIStackView.Distribution.equalSpacing
+        textStackView.alignment = UIStackView.Alignment.center
+        textStackView.spacing   = 3.0
 
-        stackViewText.addArrangedSubview(textTitle)
-        stackViewText.addArrangedSubview(textDescription)
-        stackViewText.translatesAutoresizingMaskIntoConstraints = false
+        textStackView.addArrangedSubview(textTitle)
+        textStackView.addArrangedSubview(textDescription)
+        textStackView.translatesAutoresizingMaskIntoConstraints = false
         
         stackView.axis  = NSLayoutConstraint.Axis.vertical
         stackView.distribution  = UIStackView.Distribution.equalSpacing
@@ -83,10 +90,12 @@ class OfferCollectionViewCell: UICollectionViewCell {
         stackView.spacing   = 8.0
 
         stackView.addArrangedSubview(imageView)
-        stackView.addArrangedSubview(stackViewText)
+        stackView.addArrangedSubview(textStackView)
         stackView.translatesAutoresizingMaskIntoConstraints = false
 
         self.addSubview(stackView)
+        self.addSubview(activityIndicator)
+        activityIndicator.startAnimating()
 
         //Constraints
         stackView.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true
@@ -96,13 +105,13 @@ class OfferCollectionViewCell: UICollectionViewCell {
     public func set(from viewModel:OfferViewModel) {
         if let imgUrl = URL(string: viewModel.url ){
             cancellable = loadImage(for: imgUrl)
-//            .handleEvents(receiveSubscription: { [weak self] (subscription) in
-//                <#code#>
-//            }, receiveCompletion: { [weak self] (completion) in
-//                <#code#>
-//            }, receiveCancel: { [weak self]  in
-//                <#code#>
-//            })
+            .handleEvents(receiveSubscription: { [weak self] (subscription) in
+                self?.activityIndicator.startAnimating()
+            }, receiveCompletion: { [weak self] (completion) in
+                self?.activityIndicator.stopAnimating()
+            }, receiveCancel: { [weak self]  in
+                self?.activityIndicator.stopAnimating()
+            })
             .assign(to: \.imageView.image, on: self )
         }
         textTitle.text = viewModel.current_value
