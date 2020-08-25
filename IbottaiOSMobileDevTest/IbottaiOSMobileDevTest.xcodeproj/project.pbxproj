@@ -9,6 +9,10 @@
 /* Begin PBXBuildFile section */
 		379483ED24F4C6EE0060D957 /* OfferCollectionViewFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 379483EC24F4C6EE0060D957 /* OfferCollectionViewFlowLayout.swift */; };
 		379483EF24F4CC100060D957 /* OfferCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 379483EE24F4CC100060D957 /* OfferCollectionView.swift */; };
+		379483F224F5ADDE0060D957 /* ImageCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 379483F124F5ADDE0060D957 /* ImageCache.swift */; };
+		379483F424F5AE6F0060D957 /* ImageCacheTypeProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 379483F324F5AE6F0060D957 /* ImageCacheTypeProtocol.swift */; };
+		379483F724F5AF380060D957 /* UIImage+ImageCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 379483F624F5AF380060D957 /* UIImage+ImageCache.swift */; };
+		379483F924F5AFD40060D957 /* ImageLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 379483F824F5AFD40060D957 /* ImageLoader.swift */; };
 		37A0079624F4B50E000F34C7 /* OfferCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37A0079524F4B50E000F34C7 /* OfferCollectionViewCell.swift */; };
 		37E9862324F4221E00BB4B67 /* Offers.json in Resources */ = {isa = PBXBuildFile; fileRef = 37E9862224F4221E00BB4B67 /* Offers.json */; };
 		37E9862624F423D900BB4B67 /* OffersStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37E9862524F423D900BB4B67 /* OffersStore.swift */; };
@@ -39,8 +43,12 @@
 /* Begin PBXFileReference section */
 		379483EC24F4C6EE0060D957 /* OfferCollectionViewFlowLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OfferCollectionViewFlowLayout.swift; sourceTree = "<group>"; };
 		379483EE24F4CC100060D957 /* OfferCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OfferCollectionView.swift; sourceTree = "<group>"; };
+		379483F124F5ADDE0060D957 /* ImageCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCache.swift; sourceTree = "<group>"; };
+		379483F324F5AE6F0060D957 /* ImageCacheTypeProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCacheTypeProtocol.swift; sourceTree = "<group>"; };
+		379483F624F5AF380060D957 /* UIImage+ImageCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+ImageCache.swift"; sourceTree = "<group>"; };
+		379483F824F5AFD40060D957 /* ImageLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageLoader.swift; sourceTree = "<group>"; };
 		37A0079524F4B50E000F34C7 /* OfferCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OfferCollectionViewCell.swift; sourceTree = "<group>"; };
-		37E9862224F4221E00BB4B67 /* Offers.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = Offers.json; path = ../../../IbottaMobileDevTest/data/Offers.json; sourceTree = "<group>"; };
+		37E9862224F4221E00BB4B67 /* Offers.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Offers.json; sourceTree = "<group>"; };
 		37E9862524F423D900BB4B67 /* OffersStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OffersStore.swift; sourceTree = "<group>"; };
 		37E9862724F4260900BB4B67 /* Offer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Offer.swift; sourceTree = "<group>"; };
 		37E9862924F4275F00BB4B67 /* OfferViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OfferViewModel.swift; sourceTree = "<group>"; };
@@ -78,6 +86,25 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		379483F024F5AC9D0060D957 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				37E9862224F4221E00BB4B67 /* Offers.json */,
+				379483F124F5ADDE0060D957 /* ImageCache.swift */,
+				379483F324F5AE6F0060D957 /* ImageCacheTypeProtocol.swift */,
+				379483F824F5AFD40060D957 /* ImageLoader.swift */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		379483F524F5AEFC0060D957 /* Extension */ = {
+			isa = PBXGroup;
+			children = (
+				379483F624F5AF380060D957 /* UIImage+ImageCache.swift */,
+			);
+			path = Extension;
+			sourceTree = "<group>";
+		};
 		37E9861E24F4216E00BB4B67 /* Model */ = {
 			isa = PBXGroup;
 			children = (
@@ -107,7 +134,6 @@
 		37E9862124F4218C00BB4B67 /* Store */ = {
 			isa = PBXGroup;
 			children = (
-				37E9862224F4221E00BB4B67 /* Offers.json */,
 				37E9862524F423D900BB4B67 /* OffersStore.swift */,
 				37E9863124F4639900BB4B67 /* StoreProtocol.swift */,
 			);
@@ -143,6 +169,8 @@
 		37EC3F2824F41E0B00C37BB1 /* IbottaiOSMobileDevTest */ = {
 			isa = PBXGroup;
 			children = (
+				379483F524F5AEFC0060D957 /* Extension */,
+				379483F024F5AC9D0060D957 /* Resources */,
 				37E9862424F4232200BB4B67 /* Controller */,
 				37E9862124F4218C00BB4B67 /* Store */,
 				37E9862024F4218200BB4B67 /* ViewModel */,
@@ -270,7 +298,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				379483F924F5AFD40060D957 /* ImageLoader.swift in Sources */,
+				379483F224F5ADDE0060D957 /* ImageCache.swift in Sources */,
 				37E9863224F4639900BB4B67 /* StoreProtocol.swift in Sources */,
+				379483F424F5AE6F0060D957 /* ImageCacheTypeProtocol.swift in Sources */,
 				37A0079624F4B50E000F34C7 /* OfferCollectionViewCell.swift in Sources */,
 				379483ED24F4C6EE0060D957 /* OfferCollectionViewFlowLayout.swift in Sources */,
 				37EC3F2E24F41E0B00C37BB1 /* ViewController.swift in Sources */,
@@ -279,6 +310,7 @@
 				37EC3F2C24F41E0B00C37BB1 /* SceneDelegate.swift in Sources */,
 				379483EF24F4CC100060D957 /* OfferCollectionView.swift in Sources */,
 				37E9862824F4260900BB4B67 /* Offer.swift in Sources */,
+				379483F724F5AF380060D957 /* UIImage+ImageCache.swift in Sources */,
 				37E9862A24F4275F00BB4B67 /* OfferViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

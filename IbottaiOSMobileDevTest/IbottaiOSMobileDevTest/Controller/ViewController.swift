@@ -29,7 +29,6 @@ class ViewController: UIViewController  {
         view.addSubview(self.offersCollectionView ?? UICollectionView())
         self.view = view
     }
-    
 }
 
 extension ViewController: UICollectionViewDelegate {
@@ -58,16 +57,9 @@ extension ViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let offerCell = collectionView.dequeueReusableCell(withReuseIdentifier: OfferCollectionViewCell.reuserIdentifier, for: indexPath) as! OfferCollectionViewCell
         
-        //to-do: refactor this to use a cache for images and load them in the background to not freeze the main thread, also add a spiner indicator to each loading image.
-        let offerVM = store?.objectList[indexPath.row]
-        if let imgUrl = URL(string: offerVM?.url ?? ""){
-            if let imgData = try? Data(contentsOf: imgUrl) {
-                offerCell.imageView.image = UIImage(data: imgData )
-            }
+        if let offerVM = store?.objectList[indexPath.row] {
+            offerCell.set(from: offerVM)
         }
-        offerCell.textLabel.text = offerVM?.current_value
-        offerCell.textDescription.text = offerVM?.description
-
         return offerCell
     }
 }

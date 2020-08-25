@@ -7,14 +7,18 @@
 //
 
 import UIKit
+import Combine
 
 class OfferCollectionViewCell: UICollectionViewCell {
     
     static let reuserIdentifier: String = "OfferCollectionViewCellReuserIdentifier"
+    private var cancellable: AnyCancellable?
+    private(set) var isLoading = false
+
     
-    var imageView = UIImageView()
-    var textLabel = UILabel()
-    var textDescription = UILabel()
+    private var imageView = UIImageView()
+    private var textTitle = UILabel()
+    private var textDescription = UILabel()
     
     private let stackView   = UIStackView()
     private let stackViewText   = UIStackView()
@@ -28,6 +32,10 @@ class OfferCollectionViewCell: UICollectionViewCell {
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    deinit  {
+        cancellable?.cancel()
     }
     
     func setup(){
@@ -47,14 +55,14 @@ class OfferCollectionViewCell: UICollectionViewCell {
     }
     
     private func setupText(){
-        textLabel.widthAnchor.constraint(equalToConstant: self.frame.width).isActive = true
-        textLabel.heightAnchor.constraint(equalToConstant: 20.0).isActive = true
-        textLabel.text  = "-$0.00 cash back"
-        textLabel.textAlignment = .left
+        textTitle.widthAnchor.constraint(equalToConstant: self.frame.width).isActive = true
+        textTitle.heightAnchor.constraint(equalToConstant: 20.0).isActive = true
+        textTitle.text  = "-$0.00 cash back :("
+        textTitle.textAlignment = .left
         
         textDescription.widthAnchor.constraint(equalToConstant: self.frame.width).isActive = true
         textDescription.heightAnchor.constraint(equalToConstant: 20.0).isActive = true
-        textDescription.text  = "none product"
+        textDescription.text  = "none product :("
         textDescription.textAlignment = .left
     }
     
@@ -65,7 +73,7 @@ class OfferCollectionViewCell: UICollectionViewCell {
         stackViewText.alignment = UIStackView.Alignment.center
         stackViewText.spacing   = 3.0
 
-        stackViewText.addArrangedSubview(textLabel)
+        stackViewText.addArrangedSubview(textTitle)
         stackViewText.addArrangedSubview(textDescription)
         stackViewText.translatesAutoresizingMaskIntoConstraints = false
         
@@ -83,6 +91,30 @@ class OfferCollectionViewCell: UICollectionViewCell {
         //Constraints
         stackView.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true
         stackView.centerYAnchor.constraint(equalTo: self.centerYAnchor).isActive = true
+    }
+    
+    public func set(from viewModel:OfferViewModel) {
+        if let imgUrl = URL(string: viewModel.url ){
+            cancellable = loadImage(for: imgUrl)
+//            .handleEvents(receiveSubscription: { [weak self] (subscription) in
+//                <#code#>
+//            }, receiveCompletion: { [weak self] (completion) in
+//                <#code#>
+//            }, receiveCancel: { [weak self]  in
+//                <#code#>
+//            })
+            .assign(to: \.imageView.image, on: self )
+        }
+        textTitle.text = viewModel.current_value
+        textDescription.text = viewModel.description
+    }
+    
+    private func loadImage(for url:URL) -> AnyPublisher<UIImage?, Never> {
+        return Just(url)
+            .flatMap({ poster -> AnyPublisher<UIImage?, Never> in
+            return ImageLoader.shared.loadImage(from: url)
+        })
+        .eraseToAnyPublisher()
     }
     
 }
