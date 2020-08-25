@@ -19,8 +19,7 @@ class OfferCollectionViewCell: UICollectionViewCell {
     
     static let reuserIdentifier: String = "OfferCollectionViewCellReuserIdentifier"
     private var cancellable: AnyCancellable?
-    private(set) var isLoading = false
-
+    private let defaultImage = UIImage(named: "iblogo")
     
     private var imageView = UIImageView()
     private var textTitle = UILabel()
@@ -58,7 +57,7 @@ class OfferCollectionViewCell: UICollectionViewCell {
         imageView.contentMode = .scaleAspectFit
         imageView.layer.cornerRadius = 5
         imageView.layer.masksToBounds = true
-        imageView.image = UIImage(named: "iblogo")
+        imageView.image = defaultImage
     }
     
     private func setupText(){
@@ -124,6 +123,11 @@ class OfferCollectionViewCell: UICollectionViewCell {
             return ImageLoader.shared.loadImage(from: url)
         })
         .eraseToAnyPublisher()
+    }
+    
+    override func prepareForReuse() {
+        imageView.image = defaultImage
+        cancellable?.cancel()
     }
     
 }
