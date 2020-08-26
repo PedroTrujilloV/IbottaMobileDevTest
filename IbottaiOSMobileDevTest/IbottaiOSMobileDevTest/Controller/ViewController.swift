@@ -64,6 +64,14 @@ extension ViewController: UICollectionViewDataSource {
         return offerCell
     }
     
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        if var offerVM = store?.objectList[indexPath.row] {
+            let detailVC = DetailViewController(&offerVM)
+            self.present(detailVC, animated: true) {
+                //do something
+            }
+        }
+    }
     
 }
 

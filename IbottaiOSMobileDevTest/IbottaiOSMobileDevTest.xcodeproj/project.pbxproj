@@ -16,6 +16,7 @@
 		3794840024F5F8B10060D957 /* UIColor+Palette.swift in Sources */ = {isa = PBXBuildFile; fileRef = 379483FF24F5F8B10060D957 /* UIColor+Palette.swift */; };
 		3794840224F5FD620060D957 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3794840124F5FD620060D957 /* DetailViewController.swift */; };
 		37A0079624F4B50E000F34C7 /* OfferCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37A0079524F4B50E000F34C7 /* OfferCollectionViewCell.swift */; };
+		37D959A624F610D6004622DB /* DetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37D959A524F610D6004622DB /* DetailView.swift */; };
 		37E9862324F4221E00BB4B67 /* Offers.json in Resources */ = {isa = PBXBuildFile; fileRef = 37E9862224F4221E00BB4B67 /* Offers.json */; };
 		37E9862624F423D900BB4B67 /* OffersStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37E9862524F423D900BB4B67 /* OffersStore.swift */; };
 		37E9862824F4260900BB4B67 /* Offer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37E9862724F4260900BB4B67 /* Offer.swift */; };
@@ -52,6 +53,7 @@
 		379483FF24F5F8B10060D957 /* UIColor+Palette.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Palette.swift"; sourceTree = "<group>"; };
 		3794840124F5FD620060D957 /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
 		37A0079524F4B50E000F34C7 /* OfferCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OfferCollectionViewCell.swift; sourceTree = "<group>"; };
+		37D959A524F610D6004622DB /* DetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailView.swift; sourceTree = "<group>"; };
 		37E9862224F4221E00BB4B67 /* Offers.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Offers.json; sourceTree = "<group>"; };
 		37E9862524F423D900BB4B67 /* OffersStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OffersStore.swift; sourceTree = "<group>"; };
 		37E9862724F4260900BB4B67 /* Offer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Offer.swift; sourceTree = "<group>"; };
@@ -140,6 +142,7 @@
 				37A0079524F4B50E000F34C7 /* OfferCollectionViewCell.swift */,
 				379483EC24F4C6EE0060D957 /* OfferCollectionViewFlowLayout.swift */,
 				379483EE24F4CC100060D957 /* OfferCollectionView.swift */,
+				37D959A524F610D6004622DB /* DetailView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -322,6 +325,7 @@
 			files = (
 				379483F924F5AFD40060D957 /* ImageLoader.swift in Sources */,
 				379483F224F5ADDE0060D957 /* ImageCache.swift in Sources */,
+				37D959A624F610D6004622DB /* DetailView.swift in Sources */,
 				37E9863224F4639900BB4B67 /* StoreProtocol.swift in Sources */,
 				379483F424F5AE6F0060D957 /* ImageCacheTypeProtocol.swift in Sources */,
 				3794840024F5F8B10060D957 /* UIColor+Palette.swift in Sources */,
