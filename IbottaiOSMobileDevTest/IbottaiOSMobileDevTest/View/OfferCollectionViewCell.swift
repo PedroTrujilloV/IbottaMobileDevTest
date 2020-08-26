@@ -20,6 +20,7 @@ class OfferCollectionViewCell: UICollectionViewCell {
     static let reuserIdentifier: String = "OfferCollectionViewCellReuserIdentifier"
     private var cancellable: AnyCancellable?
     private let defaultImage = UIImage(named: "iblogo")
+    private let likeStateImageView = UIImageView(image: UIImage(systemName: "heart.fill") )
     
     private var imageView = UIImageView()
     private var textTitle = UILabel()
@@ -58,6 +59,8 @@ class OfferCollectionViewCell: UICollectionViewCell {
         imageView.layer.cornerRadius = 5
         imageView.layer.masksToBounds = true
         imageView.image = defaultImage
+        
+        likeStateImageView.tintColor = UIColor.ibColor
     }
     
     private func setupText(){
@@ -95,6 +98,8 @@ class OfferCollectionViewCell: UICollectionViewCell {
         self.addSubview(stackView)
         self.addSubview(activityIndicator)
         activityIndicator.startAnimating()
+        
+        self.addSubview(likeStateImageView)
 
         //Constraints
         stackView.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true
