@@ -7,12 +7,14 @@
 //
 
 import UIKit
-import Combine
 
 class DetailViewController: UIViewController {
 
     private var detailView: DetailView?
     private var offerViewModel:OfferViewModel
+    
+    private let heartFillImage = UIImage(systemName: "heart.fill")
+    private let heartImage = UIImage(systemName: "heart")
     
     init(_ offerVM:inout OfferViewModel) {
         self.offerViewModel = offerVM
@@ -30,9 +32,17 @@ class DetailViewController: UIViewController {
     
     func setup(){
         setupView()
+        setupButtons()
+    }
+    
+    func setupButtons() {
+        let likeItButton = UIBarButtonItem(image: heartImage, style: UIBarButtonItem.Style.plain, target: self, action: Selector(("likeItButton")))
+        likeItButton.tintColor = UIColor.ibColor
+        self.navigationItem.rightBarButtonItem = likeItButton
     }
     
     private func setupView() {
+        self.title = "Details"
         let view = UIView()
         detailView = DetailView(frame: self.view.frame, offerViewModel: &self.offerViewModel)
         view.addSubview(self.detailView ?? UIView())

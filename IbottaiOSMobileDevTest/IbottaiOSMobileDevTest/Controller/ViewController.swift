@@ -63,15 +63,26 @@ extension ViewController: UICollectionViewDataSource {
         }
         return offerCell
     }
-    
+        
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if var offerVM = store?.objectList[indexPath.row] {
             let detailVC = DetailViewController(&offerVM)
-            self.present(detailVC, animated: true) {
-                //do something
-            }
+            presentDetailViewController(detailVC)
         }
     }
+    
+    private func presentDetailViewController(_ detailVC: DetailViewController) {
+       let nc = UINavigationController(rootViewController: detailVC)
+       nc.navigationBar.setBackgroundImage(UIImage(), for: UIBarMetrics.default)
+       nc.navigationBar.shadowImage = UIImage()
+       nc.navigationBar.isTranslucent = true
+       nc.view.backgroundColor = UIColor.clear
+       
+       self.present(nc, animated: true) {
+           //do something
+       }
+    }
+    
     
 }
 

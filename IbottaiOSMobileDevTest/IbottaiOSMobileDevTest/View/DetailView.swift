@@ -26,12 +26,15 @@ class DetailView: UIView {
     private var descriptionLabel = UILabel()
     private var termsTextView: UITextView?
     private var currentValueLabel = UILabel()
+    private var likeItButton = UIButton()
+    private var exitButton = UIButton(type: UIButton.ButtonType.close)
     
     private var textStackView = UIStackView()
     private var stackView = UIStackView()
     
     private let defaultImage = UIImage(named: "iblogo")
-    private let likeStateImageView = UIImageView(image: UIImage(systemName: "heart.fill") )
+    private let heartFillImage = UIImage(systemName: "heart.fill")
+    private let heartImage = UIImage(systemName: "heart")
     
     init(frame: CGRect, offerViewModel: inout OfferViewModel) {
         super.init(frame: frame)
@@ -41,6 +44,10 @@ class DetailView: UIView {
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    deinit  {
+        cancellable?.cancel()
     }
     
     private func setup(){
@@ -63,7 +70,7 @@ class DetailView: UIView {
         productImageView.layer.masksToBounds = true
         productImageView.image = defaultImage
            
-        likeStateImageView.tintColor = UIColor.ibColor
+//        likeStateImageView.tintColor = UIColor.ibColor
     }
        
     private func setupText(){
@@ -83,19 +90,15 @@ class DetailView: UIView {
         descriptionLabel.text  = "none product :("
         descriptionLabel.textAlignment = .left
     }
-       
+    
+    private func setupButton(){
+        likeItButton.setImage(self.heartImage, for: UIControl.State.normal)
+        likeItButton.setImage(self.heartFillImage, for: UIControl.State.selected)
+    }
+        
     private func setupStackView(){
            
-        textStackView.axis  = NSLayoutConstraint.Axis.vertical
-        textStackView.distribution  = UIStackView.Distribution.equalSpacing
-        textStackView.alignment = UIStackView.Alignment.center
-        textStackView.spacing   = 8.0
-
-        textStackView.addArrangedSubview(nameLabel)
-        textStackView.addArrangedSubview(currentValueLabel)
-        textStackView.addArrangedSubview(descriptionLabel)
-
-        textStackView.translatesAutoresizingMaskIntoConstraints = false
+        setupTextStackView()
            
         stackView.axis  = NSLayoutConstraint.Axis.vertical
         stackView.distribution  = UIStackView.Distribution.equalSpacing
@@ -112,6 +115,23 @@ class DetailView: UIView {
         stackView.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true
         stackView.centerYAnchor.constraint(equalTo: self.centerYAnchor).isActive = true
     }
+    
+    private func setupButtonStackView(){
+        // ...
+    }
+    
+    private func setupTextStackView() {
+         textStackView.axis  = NSLayoutConstraint.Axis.vertical
+         textStackView.distribution  = UIStackView.Distribution.equalSpacing
+         textStackView.alignment = UIStackView.Alignment.center
+         textStackView.spacing   = 8.0
+         
+         textStackView.addArrangedSubview(nameLabel)
+         textStackView.addArrangedSubview(currentValueLabel)
+         textStackView.addArrangedSubview(descriptionLabel)
+         
+         textStackView.translatesAutoresizingMaskIntoConstraints = false
+     }
     
     public func set(from viewModel:OfferViewModel) {
         if let imgUrl = URL(string: viewModel.url ){
