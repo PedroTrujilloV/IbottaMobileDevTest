@@ -17,6 +17,8 @@ class DetailViewController: UIViewController {
     private let heartImage = UIImage(systemName: "heart")
     private let exitImage = UIImage(systemName: "xmark")
     
+    private var likeItButton : UIBarButtonItem?
+    
     init(_ offerVM:inout OfferViewModel) {
         self.offerViewModel = offerVM
         super.init(nibName: nil, bundle: nil)
@@ -37,11 +39,12 @@ class DetailViewController: UIViewController {
     }
     
     func setupButtons() {
-        let likeItButton = UIBarButtonItem(image: heartImage, style: UIBarButtonItem.Style.plain, target: self, action: Selector(("likeItAction")))
-        likeItButton.tintColor = UIColor.ibColor
+        
+        likeItButton = UIBarButtonItem(image: heartImage, style: UIBarButtonItem.Style.plain, target: self, action: #selector(likeItAction(sender:)))
+        likeItButton?.tintColor = UIColor.ibColor
         self.navigationItem.rightBarButtonItem = likeItButton
         
-        let exitButton = UIBarButtonItem(image: exitImage, style: UIBarButtonItem.Style.plain, target: self, action: Selector(("closeAction")))
+        let exitButton = UIBarButtonItem(image: exitImage, style: UIBarButtonItem.Style.plain, target: self, action: #selector(closeAction(sender:)))
         exitButton.tintColor = UIColor.systemGray
         self.navigationItem.leftBarButtonItem = exitButton
     }
@@ -52,6 +55,25 @@ class DetailViewController: UIViewController {
         detailView = DetailView(frame: self.view.frame, offerViewModel: &self.offerViewModel)
         view.addSubview(self.detailView ?? UIView())
         self.view = view
+    }
+    
+    @objc private func likeItAction(sender:UIBarButtonItem) {
+        toggleLikeIt()
+    }
+    
+    private func toggleLikeIt() {
+        offerViewModel.likeItState = !offerViewModel.likeItState
+        if offerViewModel.likeItState == true {
+            likeItButton?.image = heartFillImage
+        } else {
+            likeItButton?.image = heartImage
+        }
+    }
+    
+    @objc private func closeAction(sender:UIBarButtonItem) {
+        dismiss(animated: true) {
+            // do something
+        }
     }
        
 }
