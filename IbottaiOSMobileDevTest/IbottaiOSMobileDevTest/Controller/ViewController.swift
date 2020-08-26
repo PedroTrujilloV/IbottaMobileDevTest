@@ -46,6 +46,7 @@ extension ViewController: UICollectionViewDelegate {
         self.offersCollectionView?.bottomAnchor.constraint(equalTo: self.view.bottomAnchor, constant: 0).isActive = true
 
     }
+    
 }
 
 
@@ -62,6 +63,8 @@ extension ViewController: UICollectionViewDataSource {
         }
         return offerCell
     }
+    
+    
 }
 
 extension ViewController: StoreDelegate {

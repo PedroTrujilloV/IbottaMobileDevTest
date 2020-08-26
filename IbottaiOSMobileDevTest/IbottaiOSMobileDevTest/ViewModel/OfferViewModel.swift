@@ -38,6 +38,8 @@ struct OfferViewModel:Hashable {
         return model.current_value ?? ""
     }
     
+    var likeItState:Bool = false
+    
     static func == (lhs: OfferViewModel, rhs: OfferViewModel) -> Bool {
         return lhs.identifier == rhs.identifier
     }
