@@ -26,17 +26,13 @@ class DetailView: UIView {
     private var descriptionLabel = UILabel()
     private var termsTextView: UITextView?
     private var currentValueLabel = UILabel()
-    private var likeItButton = UIButton()
-    private var exitButton = UIButton(type: UIButton.ButtonType.close)
     
     private var textStackView = UIStackView()
     private var stackView = UIStackView()
     
     private let defaultImage = UIImage(named: "iblogo")
-    private let heartFillImage = UIImage(systemName: "heart.fill")
-    private let heartImage = UIImage(systemName: "heart")
     
-    init(frame: CGRect, offerViewModel: inout OfferViewModel) {
+    init(frame: CGRect, offerViewModel:  OfferViewModel) {
         super.init(frame: frame)
         setup()
         set(from: offerViewModel)
@@ -90,11 +86,6 @@ class DetailView: UIView {
         descriptionLabel.text  = "none product :("
         descriptionLabel.textAlignment = .left
     }
-    
-    private func setupButton(){
-        likeItButton.setImage(self.heartImage, for: UIControl.State.normal)
-        likeItButton.setImage(self.heartFillImage, for: UIControl.State.selected)
-    }
         
     private func setupStackView(){
            
@@ -114,10 +105,6 @@ class DetailView: UIView {
         //Constraints
         stackView.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true
         stackView.centerYAnchor.constraint(equalTo: self.centerYAnchor).isActive = true
-    }
-    
-    private func setupButtonStackView(){
-        // ...
     }
     
     private func setupTextStackView() {

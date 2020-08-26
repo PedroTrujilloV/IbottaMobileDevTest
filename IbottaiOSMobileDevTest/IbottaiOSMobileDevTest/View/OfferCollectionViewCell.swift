@@ -18,7 +18,7 @@ enum LoadingState {
 class OfferCollectionViewCell: UICollectionViewCell {
     
     static let reuserIdentifier: String = "OfferCollectionViewCellReuserIdentifier"
-    private var cancellable: AnyCancellable?
+    private var cancellables: Array<AnyCancellable> = []
     private let defaultImage = UIImage(named: "iblogo")
     private let likeStateImageView = UIImageView(image: UIImage(systemName: "heart.fill") )
     
@@ -29,6 +29,8 @@ class OfferCollectionViewCell: UICollectionViewCell {
     
     private let stackView   = UIStackView()
     private let textStackView   = UIStackView()
+    
+    private static let processingQueue = DispatchQueue(label: "processingQueue")
 
 
     override init(frame: CGRect) {
@@ -42,7 +44,10 @@ class OfferCollectionViewCell: UICollectionViewCell {
     }
     
     deinit  {
-        cancellable?.cancel()
+        self.cancel()
+    }
+    private func cancel(){
+        _ = cancellables.map{ $0.cancel()}
     }
     
     func setup(){
@@ -106,20 +111,30 @@ class OfferCollectionViewCell: UICollectionViewCell {
         stackView.centerYAnchor.constraint(equalTo: self.centerYAnchor).isActive = true
     }
     
-    public func set(from viewModel:OfferViewModel) {
+    public func set(from viewModel:  OfferViewModel) {
         if let imgUrl = URL(string: viewModel.url ){
-            cancellable = loadImage(for: imgUrl)
-            .handleEvents(receiveSubscription: { [weak self] (subscription) in
-                self?.activityIndicator.startAnimating()
-            }, receiveCompletion: { [weak self] (completion) in
-                self?.activityIndicator.stopAnimating()
-            }, receiveCancel: { [weak self]  in
-                self?.activityIndicator.stopAnimating()
-            })
-            .assign(to: \.imageView.image, on: self )
+            cancellables.append(
+                loadImage(for: imgUrl)
+                .handleEvents(receiveSubscription: { [weak self] (subscription) in
+                    self?.activityIndicator.startAnimating()
+                }, receiveCompletion: { [weak self] (completion) in
+                    self?.activityIndicator.stopAnimating()
+                }, receiveCancel: { [weak self]  in
+                    self?.activityIndicator.stopAnimating()
+                })
+                .assign(to: \.imageView.image, on: self )
+            )
         }
         textTitle.text = viewModel.current_value
         textDescription.text = viewModel.description
+        cancellables.append(
+            viewModel.$likeItState
+                .subscribe(on: OfferCollectionViewCell.processingQueue)
+                .receive(on: RunLoop.main)
+                .sink(receiveValue: {[weak self] (likedIt) in
+                    self?.likeStateImageView.isHidden = !likedIt
+                })
+        )
     }
     
     private func loadImage(for url:URL) -> AnyPublisher<UIImage?, Never> {
@@ -132,7 +147,8 @@ class OfferCollectionViewCell: UICollectionViewCell {
     
     override func prepareForReuse() {
         imageView.image = defaultImage
-        cancellable?.cancel()
+        self.likeStateImageView.isHidden = true
+        self.cancel()
     }
     
 }

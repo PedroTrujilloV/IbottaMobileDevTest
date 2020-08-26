@@ -29,6 +29,10 @@ class ViewController: UIViewController  {
         view.addSubview(self.offersCollectionView ?? UICollectionView())
         self.view = view
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        self.offersCollectionView?.reloadData()
+    }
 }
 
 extension ViewController: UICollectionViewDelegate {
@@ -65,8 +69,8 @@ extension ViewController: UICollectionViewDataSource {
     }
         
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        if var offerVM = store?.objectList[indexPath.row] {
-            let detailVC = DetailViewController(&offerVM)
+        if let offerVM = store?.objectList[indexPath.row] {
+            let detailVC = DetailViewController(offerVM)
             presentDetailViewController(detailVC)
         }
     }
@@ -82,7 +86,6 @@ extension ViewController: UICollectionViewDataSource {
            //do something
        }
     }
-    
     
 }
 

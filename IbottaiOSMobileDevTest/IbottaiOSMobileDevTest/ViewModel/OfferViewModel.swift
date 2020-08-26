@@ -7,12 +7,12 @@
 //
 
 import Foundation
+import Combine
 
-
-struct OfferViewModel:Hashable {
+class OfferViewModel {
     
     private let model:Offer
-    
+        
     var identifier = UUID()
     
     init(model:Offer) {
@@ -38,9 +38,10 @@ struct OfferViewModel:Hashable {
         return model.current_value ?? ""
     }
     
-    var likeItState:Bool = false
-    
+    @Published var likeItState = false
+
     static func == (lhs: OfferViewModel, rhs: OfferViewModel) -> Bool {
         return lhs.identifier == rhs.identifier
     }
+    
 }
