@@ -19,20 +19,21 @@ class OfferCollectionViewCell: UICollectionViewCell {
     
     static let reuserIdentifier: String = "OfferCollectionViewCellReuserIdentifier"
     private var cancellables: Array<AnyCancellable> = []
-    private let defaultImage = UIImage(named: "iblogo")
+    private let defaultImage = UIImage(named: "iblogo")?.withInset(UIEdgeInsets(top: 20, left: 20, bottom: 20, right: 20))
     private let likeStateImageView = UIImageView(image: UIImage(systemName: "heart.fill") )
     
     private var imageView = UIImageView()
-    private var textTitle = UILabel()
-    private var textDescription = UILabel()
+    private var amountLabel = UILabel()
+    private var nameLabel = UILabel()
     private let activityIndicator = UIActivityIndicatorView(style: UIActivityIndicatorView.Style.medium)
     
     private let stackView   = UIStackView()
     private let textStackView   = UIStackView()
     
     private static let processingQueue = DispatchQueue(label: "processingQueue")
-
-
+    
+    private let heightProportion:CGFloat = 0.65
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         //self.backgroundColor = .orange
@@ -54,45 +55,47 @@ class OfferCollectionViewCell: UICollectionViewCell {
         setupImageView()
         setupText()
         setupStackView()
+        setupIcons()
     }
     
     private func setupImageView(){
-        imageView.backgroundColor = UIColor.systemGray2
-        imageView.heightAnchor.constraint(equalToConstant: 120.0).isActive = true
+        imageView.backgroundColor = UIColor.cellImageBackgroundColor
+        imageView.heightAnchor.constraint(equalToConstant: self.frame.width * heightProportion).isActive = true
         imageView.widthAnchor.constraint(equalToConstant: self.frame.width).isActive = true
         imageView.contentMode = .scaleAspectFit
         imageView.layer.cornerRadius = 5
         imageView.layer.masksToBounds = true
         imageView.image = defaultImage
-        
-        likeStateImageView.tintColor = UIColor.ibColor
     }
     
     private func setupText(){
-        textTitle.widthAnchor.constraint(equalToConstant: self.frame.width).isActive = true
-        textTitle.heightAnchor.constraint(equalToConstant: 20.0).isActive = true
-        textTitle.text  = "-$0.00 cash back :("
-        textTitle.textAlignment = .left
+        amountLabel.widthAnchor.constraint(equalToConstant: self.frame.width).isActive = true
+        amountLabel.heightAnchor.constraint(equalToConstant: 20.0).isActive = true
+        amountLabel.text  = "-$0.00 cash back :("
+        amountLabel.textAlignment = .left
+        amountLabel.font = UIFont(name: "AvenirNext-DemiBold", size: 12)
+        amountLabel.textColor = UIColor.amountTextColor
         
-        textDescription.widthAnchor.constraint(equalToConstant: self.frame.width).isActive = true
-        textDescription.heightAnchor.constraint(equalToConstant: 20.0).isActive = true
-        textDescription.text  = "none product :("
-        textDescription.textAlignment = .left
+        nameLabel.widthAnchor.constraint(equalToConstant: self.frame.width).isActive = true
+        nameLabel.heightAnchor.constraint(equalToConstant: 20.0).isActive = true
+        nameLabel.text  = "none product :("
+        nameLabel.textAlignment = .left
+        nameLabel.font = UIFont(name: "AvenirNext-Regular", size: 11)
+        nameLabel.textColor = UIColor.nameTextColor
     }
     
     func setupStackView(){
-        
         textStackView.axis  = NSLayoutConstraint.Axis.vertical
-        textStackView.distribution  = UIStackView.Distribution.equalSpacing
+        textStackView.distribution  = UIStackView.Distribution.fillEqually
         textStackView.alignment = UIStackView.Alignment.center
         textStackView.spacing   = 3.0
 
-        textStackView.addArrangedSubview(textTitle)
-        textStackView.addArrangedSubview(textDescription)
+        textStackView.addArrangedSubview(amountLabel)
+        textStackView.addArrangedSubview(nameLabel)
         textStackView.translatesAutoresizingMaskIntoConstraints = false
         
         stackView.axis  = NSLayoutConstraint.Axis.vertical
-        stackView.distribution  = UIStackView.Distribution.equalSpacing
+        stackView.distribution  = UIStackView.Distribution.fillProportionally
         stackView.alignment = UIStackView.Alignment.center
         stackView.spacing   = 8.0
 
@@ -101,14 +104,20 @@ class OfferCollectionViewCell: UICollectionViewCell {
         stackView.translatesAutoresizingMaskIntoConstraints = false
 
         self.addSubview(stackView)
-        self.addSubview(activityIndicator)
         activityIndicator.startAnimating()
         
-        self.addSubview(likeStateImageView)
-
         //Constraints
         stackView.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true
         stackView.centerYAnchor.constraint(equalTo: self.centerYAnchor).isActive = true
+    }
+    
+    private func setupIcons(){
+        likeStateImageView.tintColor = UIColor.ibColor
+        likeStateImageView.isHidden = true
+        let yPos:CGFloat = self.frame.size.height - (self.frame.size.height * heightProportion)
+        activityIndicator.center = CGPoint(x: self.frame.size.width/2, y: yPos)
+        self.addSubview(activityIndicator)
+        self.addSubview(likeStateImageView)
     }
     
     public func set(from viewModel:  OfferViewModel) {
@@ -119,14 +128,16 @@ class OfferCollectionViewCell: UICollectionViewCell {
                     self?.activityIndicator.startAnimating()
                 }, receiveCompletion: { [weak self] (completion) in
                     self?.activityIndicator.stopAnimating()
+                    let margin:CGFloat = 16
+                    self?.imageView.image = self?.imageView.image?.withInset(UIEdgeInsets(top: margin, left: margin, bottom: margin, right: margin))
                 }, receiveCancel: { [weak self]  in
                     self?.activityIndicator.stopAnimating()
                 })
-                .assign(to: \.imageView.image, on: self )
+                .assign(to: \.image, on: imageView )
             )
         }
-        textTitle.text = viewModel.current_value
-        textDescription.text = viewModel.description
+        amountLabel.text = viewModel.current_value
+        nameLabel.text = viewModel.name
         cancellables.append(
             viewModel.$likeItState
                 .subscribe(on: OfferCollectionViewCell.processingQueue)
