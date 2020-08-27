@@ -17,6 +17,7 @@
 		3794840224F5FD620060D957 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3794840124F5FD620060D957 /* DetailViewController.swift */; };
 		37A0079624F4B50E000F34C7 /* OfferCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37A0079524F4B50E000F34C7 /* OfferCollectionViewCell.swift */; };
 		37D959A624F610D6004622DB /* DetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37D959A524F610D6004622DB /* DetailView.swift */; };
+		37D959A824F70366004622DB /* Roboto-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 37D959A724F70359004622DB /* Roboto-Bold.ttf */; };
 		37E9862324F4221E00BB4B67 /* Offers.json in Resources */ = {isa = PBXBuildFile; fileRef = 37E9862224F4221E00BB4B67 /* Offers.json */; };
 		37E9862624F423D900BB4B67 /* OffersStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37E9862524F423D900BB4B67 /* OffersStore.swift */; };
 		37E9862824F4260900BB4B67 /* Offer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37E9862724F4260900BB4B67 /* Offer.swift */; };
@@ -54,6 +55,7 @@
 		3794840124F5FD620060D957 /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
 		37A0079524F4B50E000F34C7 /* OfferCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OfferCollectionViewCell.swift; sourceTree = "<group>"; };
 		37D959A524F610D6004622DB /* DetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailView.swift; sourceTree = "<group>"; };
+		37D959A724F70359004622DB /* Roboto-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Roboto-Bold.ttf"; path = "../../../../assets/Roboto/Roboto-Bold.ttf"; sourceTree = "<group>"; };
 		37E9862224F4221E00BB4B67 /* Offers.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Offers.json; sourceTree = "<group>"; };
 		37E9862524F423D900BB4B67 /* OffersStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OffersStore.swift; sourceTree = "<group>"; };
 		37E9862724F4260900BB4B67 /* Offer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Offer.swift; sourceTree = "<group>"; };
@@ -115,6 +117,7 @@
 		379483FC24F5F5A90060D957 /* Fonts */ = {
 			isa = PBXGroup;
 			children = (
+				37D959A724F70359004622DB /* Roboto-Bold.ttf */,
 			);
 			path = Fonts;
 			sourceTree = "<group>";
@@ -305,6 +308,7 @@
 			files = (
 				37E9862324F4221E00BB4B67 /* Offers.json in Resources */,
 				37EC3F3624F41E1200C37BB1 /* LaunchScreen.storyboard in Resources */,
+				37D959A824F70366004622DB /* Roboto-Bold.ttf in Resources */,
 				37EC3F3324F41E1200C37BB1 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
