@@ -66,25 +66,32 @@ class DetailView: UIView {
         productImageView.layer.masksToBounds = true
         productImageView.image = defaultImage
            
-//        likeStateImageView.tintColor = UIColor.ibColor
+        //likeStateImageView.tintColor = UIColor.ibColor
     }
        
     private func setupText(){
         
-        nameLabel.widthAnchor.constraint(equalToConstant: self.frame.width).isActive = true
-        nameLabel.heightAnchor.constraint(equalToConstant: 20.0).isActive = true
+        nameLabel.widthAnchor.constraint(equalToConstant: self.frame.width-20).isActive = true
+        nameLabel.heightAnchor.constraint(equalToConstant: 45.0).isActive = true
         nameLabel.text  = "-$0.00 cash back :("
-        nameLabel.textAlignment = .left
+        nameLabel.textAlignment = .center
+        nameLabel.font = UIFont(name: "Roboto-Bold", size: 16)
+        nameLabel.textColor = UIColor.nameTextColor
+        nameLabel.numberOfLines = 2
            
-        currentValueLabel.widthAnchor.constraint(equalToConstant: self.frame.width).isActive = true
+        currentValueLabel.widthAnchor.constraint(equalToConstant: self.frame.width-20).isActive = true
         currentValueLabel.heightAnchor.constraint(equalToConstant: 20.0).isActive = true
         currentValueLabel.text  = "none product :("
         currentValueLabel.textAlignment = .left
+        currentValueLabel.font = UIFont(name: "AvenirNext-DemiBold", size: 20)
+        currentValueLabel.textColor = UIColor.ibColor
         
-        descriptionLabel.widthAnchor.constraint(equalToConstant: self.frame.width).isActive = true
-        descriptionLabel.heightAnchor.constraint(equalToConstant: 20.0).isActive = true
+        descriptionLabel.widthAnchor.constraint(equalToConstant: self.frame.width-30).isActive = true
+        descriptionLabel.heightAnchor.constraint(equalToConstant: 40.0).isActive = true
         descriptionLabel.text  = "none product :("
         descriptionLabel.textAlignment = .left
+        descriptionLabel.font = UIFont(name: "Avenir-Light", size: 14)
+        descriptionLabel.numberOfLines = 3
     }
         
     private func setupStackView(){
@@ -94,15 +101,15 @@ class DetailView: UIView {
         stackView.axis  = NSLayoutConstraint.Axis.vertical
         stackView.distribution  = UIStackView.Distribution.equalSpacing
         stackView.alignment = UIStackView.Alignment.center
-        stackView.spacing   = 16.0
+        stackView.spacing   = 20.0
 
         stackView.addArrangedSubview(productImageView)
         stackView.addArrangedSubview(textStackView)
         stackView.translatesAutoresizingMaskIntoConstraints = false
 
         self.addSubview(stackView)
-
-        //Constraints
+        
+        //Constraints/
         stackView.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true
         stackView.centerYAnchor.constraint(equalTo: self.centerYAnchor).isActive = true
     }
@@ -111,7 +118,7 @@ class DetailView: UIView {
          textStackView.axis  = NSLayoutConstraint.Axis.vertical
          textStackView.distribution  = UIStackView.Distribution.equalSpacing
          textStackView.alignment = UIStackView.Alignment.center
-         textStackView.spacing   = 8.0
+         textStackView.spacing   = 14.0
          
          textStackView.addArrangedSubview(nameLabel)
          textStackView.addArrangedSubview(currentValueLabel)
@@ -123,6 +130,10 @@ class DetailView: UIView {
     public func set(from viewModel:OfferViewModel) {
         if let imgUrl = URL(string: viewModel.url ){
             cancellable = loadImage(for: imgUrl)
+                .handleEvents( receiveCompletion: { [weak self] (completion) in
+                    let margin:CGFloat = 16
+                    self?.productImageView.image = self?.productImageView.image?.withInset(UIEdgeInsets(top: margin, left: margin, bottom: margin, right: margin))
+                })
             .assign(to: \.productImageView.image, on: self )
         }
         
