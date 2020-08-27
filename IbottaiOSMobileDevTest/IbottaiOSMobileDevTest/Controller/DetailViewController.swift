@@ -34,6 +34,13 @@ class DetailViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
+    deinit  {
+        self.cancel()
+    }
+    private func cancel(){
+        cancellable?.cancel()
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setup()
@@ -69,7 +76,9 @@ class DetailViewController: UIViewController {
         self.navigationItem.leftBarButtonItem = exitButton
     }
     
+    
     private func setupView() {
+        viewRespectsSystemMinimumLayoutMargins = false
         self.title = "Details"
         let view = UIView()
         detailView = DetailView(frame: self.view.frame, offerViewModel: self.offerViewModel)

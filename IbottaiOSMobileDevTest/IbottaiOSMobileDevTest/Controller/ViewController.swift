@@ -25,6 +25,7 @@ class ViewController: UIViewController  {
     }
         
     private func setupView() {
+        viewRespectsSystemMinimumLayoutMargins = false
         let view = UIView()
         view.addSubview(self.offersCollectionView ?? UICollectionView())
         self.view = view
