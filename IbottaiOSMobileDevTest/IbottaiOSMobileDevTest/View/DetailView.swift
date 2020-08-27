@@ -64,9 +64,7 @@ class DetailView: UIView {
         productImageView.contentMode = .scaleAspectFit
         productImageView.layer.cornerRadius = 5
         productImageView.layer.masksToBounds = true
-        productImageView.image = defaultImage
-           
-        //likeStateImageView.tintColor = UIColor.ibColor
+        productImageView.image = defaultImage           
     }
        
     private func setupText(){
