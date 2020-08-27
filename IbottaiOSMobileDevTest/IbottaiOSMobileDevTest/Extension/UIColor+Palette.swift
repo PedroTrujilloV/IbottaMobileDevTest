@@ -11,6 +11,19 @@ import UIKit
 
 extension UIColor {
     public static var ibColor: UIColor {
-        return UIColor(named: "ibColor") ?? .systemPink
+        return UIColor(named: "ibColor") ?? systemPink
     }
+    
+    public static var amountTextColor: UIColor {
+        return UIColor(named: "amountTextColor") ?? systemGray
+    }
+    
+    public static var nameTextColor: UIColor {
+        return UIColor(named: "nameTextColor") ?? systemGray2
+    }
+    
+    public static var cellImageBackgroundColor: UIColor {
+        return UIColor(named: "cellImageBackgroundColor") ?? systemGray2
+    }
+    
 }
