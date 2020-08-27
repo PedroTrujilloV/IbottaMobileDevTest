@@ -13,17 +13,14 @@ class DetailViewController: UIViewController {
 
     private var detailView: DetailView?
     private var offerViewModel:OfferViewModel
-    
     private var cancellable:AnyCancellable?
+    private static let processingQueue = DispatchQueue(label: "processingQueue")
     
     private let heartFillImage = UIImage(systemName: "heart.fill")
     private let heartImage = UIImage(systemName: "heart")
     private let exitImage = UIImage(systemName: "xmark")
-    
     private var likeItButton : UIBarButtonItem?
     
-    private static let processingQueue = DispatchQueue(label: "processingQueue")
-
     
     init(_ offerVM: OfferViewModel) {
         self.offerViewModel = offerVM
@@ -37,6 +34,7 @@ class DetailViewController: UIViewController {
     deinit  {
         self.cancel()
     }
+    
     private func cancel(){
         cancellable?.cancel()
     }
@@ -76,7 +74,6 @@ class DetailViewController: UIViewController {
         self.navigationItem.leftBarButtonItem = exitButton
     }
     
-    
     private func setupView() {
         viewRespectsSystemMinimumLayoutMargins = false
         self.title = "Details"
@@ -88,7 +85,6 @@ class DetailViewController: UIViewController {
     
     @objc private func likeItAction(sender:UIBarButtonItem) {
         toggleLikeIt()
-        print("\n toggleLikeIt")
     }
     
     private func toggleLikeIt() {

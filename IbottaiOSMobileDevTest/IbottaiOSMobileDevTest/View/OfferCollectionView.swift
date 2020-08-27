@@ -10,6 +10,7 @@ import Foundation
 import UIKit
 
 class OfferCollectionView: UICollectionView {
+    
     init(frame: CGRect) {
         let layout = OfferCollectionViewFlowLayout(frame: frame)
         super.init(frame: frame, collectionViewLayout: layout)

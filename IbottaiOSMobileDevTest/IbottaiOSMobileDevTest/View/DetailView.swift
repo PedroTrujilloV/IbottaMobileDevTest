@@ -10,14 +10,6 @@ import UIKit
 import Combine
 
 class DetailView: UIView {
-
-    /*
-    // Only override draw() if you perform custom drawing.
-    // An empty implementation adversely affects performance during animation.
-    override func draw(_ rect: CGRect) {
-        // Drawing code
-    }
-    */
     
     private var cancellable: AnyCancellable?
 
@@ -26,10 +18,8 @@ class DetailView: UIView {
     private var descriptionLabel = UILabel()
     private var termsTextView: UITextView?
     private var currentValueLabel = UILabel()
-    
     private var textStackView = UIStackView()
     private var stackView = UIStackView()
-    
     private let defaultImage = UIImage(named: "ibotta")?.withInset(UIEdgeInsets(top: 20, left: 20, bottom: 20, right: 20))
     
     init(frame: CGRect, offerViewModel:  OfferViewModel) {
@@ -107,7 +97,6 @@ class DetailView: UIView {
 
         self.addSubview(stackView)
         
-        //Constraints/
         stackView.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true
         stackView.centerYAnchor.constraint(equalTo: self.centerYAnchor).isActive = true
     }
@@ -126,20 +115,22 @@ class DetailView: UIView {
      }
     
     public func set(from viewModel:OfferViewModel) {
+        bind(viewModel)
+        nameLabel.text = viewModel.name
+        currentValueLabel.text = viewModel.current_value
+        descriptionLabel.text = viewModel.description
+    }
+    
+    private func bind(_ viewModel: OfferViewModel) {
         if let imgUrl = URL(string: viewModel.url ){
             cancellable = loadImage(for: imgUrl)
                 .handleEvents( receiveCompletion: { [weak self] (completion) in
                     let margin:CGFloat = 16
                     self?.productImageView.image = self?.productImageView.image?.withInset(UIEdgeInsets(top: margin, left: margin, bottom: margin, right: margin))
                 })
-            .assign(to: \.productImageView.image, on: self )
+                .assign(to: \.productImageView.image, on: self )
         }
-        
-        nameLabel.text = viewModel.name
-        currentValueLabel.text = viewModel.current_value
-        descriptionLabel.text = viewModel.description
-
-    }
+    }    
     
     private func loadImage(for url:URL) -> AnyPublisher<UIImage?, Never> {
         return Just(url)

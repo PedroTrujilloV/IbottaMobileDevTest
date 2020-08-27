@@ -19,20 +19,18 @@ class OfferCollectionViewCell: UICollectionViewCell {
     
     static let reuserIdentifier: String = "OfferCollectionViewCellReuserIdentifier"
     private var cancellables: Array<AnyCancellable> = []
+    private static let processingQueue = DispatchQueue(label: "processingQueue")
+    private let heightProportion:CGFloat = 0.65
+    
     private let defaultImage = UIImage(named: "iblogo")?.withInset(UIEdgeInsets(top: 20, left: 20, bottom: 20, right: 20))
     private let likeStateImageView = UIImageView(image: UIImage(systemName: "heart.fill") )
-    
     private var imageView = UIImageView()
     private var amountLabel = UILabel()
     private var nameLabel = UILabel()
     private let activityIndicator = UIActivityIndicatorView(style: UIActivityIndicatorView.Style.medium)
-    
     private let stackView   = UIStackView()
     private let textStackView   = UIStackView()
     
-    private static let processingQueue = DispatchQueue(label: "processingQueue")
-    
-    private let heightProportion:CGFloat = 0.65
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -46,6 +44,7 @@ class OfferCollectionViewCell: UICollectionViewCell {
     deinit  {
         self.cancel()
     }
+    
     private func cancel(){
         _ = cancellables.map{ $0.cancel()}
     }
@@ -83,7 +82,7 @@ class OfferCollectionViewCell: UICollectionViewCell {
         nameLabel.textColor = UIColor.nameTextColor
     }
     
-    func setupStackView(){
+    private func setupStackView(){
         textStackView.axis  = NSLayoutConstraint.Axis.vertical
         textStackView.distribution  = UIStackView.Distribution.fillEqually
         textStackView.alignment = UIStackView.Alignment.center
@@ -105,7 +104,6 @@ class OfferCollectionViewCell: UICollectionViewCell {
         self.addSubview(stackView)
         activityIndicator.startAnimating()
         
-        //Constraints
         stackView.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true
         stackView.centerYAnchor.constraint(equalTo: self.centerYAnchor).isActive = true
     }
@@ -118,25 +116,30 @@ class OfferCollectionViewCell: UICollectionViewCell {
         self.addSubview(activityIndicator)
         self.addSubview(likeStateImageView)
     }
-    
+        
     public func set(from viewModel:  OfferViewModel) {
+        bind(viewModel)
+        amountLabel.text = viewModel.current_value
+        nameLabel.text = viewModel.name
+    }
+    
+    private func bind(_ viewModel: OfferViewModel) {
         if let imgUrl = URL(string: viewModel.url ){
             cancellables.append(
                 loadImage(for: imgUrl)
-                .handleEvents(receiveSubscription: { [weak self] (subscription) in
-                    self?.activityIndicator.startAnimating()
-                }, receiveCompletion: { [weak self] (completion) in
-                    self?.activityIndicator.stopAnimating()
-                    let margin:CGFloat = 16
-                    self?.imageView.image = self?.imageView.image?.withInset(UIEdgeInsets(top: margin, left: margin, bottom: margin, right: margin))
-                }, receiveCancel: { [weak self]  in
-                    self?.activityIndicator.stopAnimating()
-                })
-                .assign(to: \.image, on: imageView )
+                    .handleEvents(receiveSubscription: { [weak self] (subscription) in
+                        self?.activityIndicator.startAnimating()
+                        }, receiveCompletion: { [weak self] (completion) in
+                            self?.activityIndicator.stopAnimating()
+                            let margin:CGFloat = 16
+                            self?.imageView.image = self?.imageView.image?.withInset(UIEdgeInsets(top: margin, left: margin, bottom: margin, right: margin))
+                        }, receiveCancel: { [weak self]  in
+                            self?.activityIndicator.stopAnimating()
+                    })
+                    .assign(to: \.image, on: imageView )
             )
         }
-        amountLabel.text = viewModel.current_value
-        nameLabel.text = viewModel.name
+        
         cancellables.append(
             viewModel.$likeItState
                 .subscribe(on: OfferCollectionViewCell.processingQueue)
