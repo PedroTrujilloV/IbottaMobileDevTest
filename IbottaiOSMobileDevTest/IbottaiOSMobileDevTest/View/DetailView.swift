@@ -30,7 +30,7 @@ class DetailView: UIView {
     private var textStackView = UIStackView()
     private var stackView = UIStackView()
     
-    private let defaultImage = UIImage(named: "iblogo")
+    private let defaultImage = UIImage(named: "ibotta")?.withInset(UIEdgeInsets(top: 20, left: 20, bottom: 20, right: 20))
     
     init(frame: CGRect, offerViewModel:  OfferViewModel) {
         super.init(frame: frame)
@@ -79,14 +79,14 @@ class DetailView: UIView {
         nameLabel.textColor = UIColor.nameTextColor
         nameLabel.numberOfLines = 2
            
-        currentValueLabel.widthAnchor.constraint(equalToConstant: self.frame.width-20).isActive = true
+        currentValueLabel.widthAnchor.constraint(equalToConstant: self.frame.width-30).isActive = true
         currentValueLabel.heightAnchor.constraint(equalToConstant: 20.0).isActive = true
         currentValueLabel.text  = "none product :("
         currentValueLabel.textAlignment = .left
         currentValueLabel.font = UIFont(name: "AvenirNext-DemiBold", size: 20)
         currentValueLabel.textColor = UIColor.ibColor
         
-        descriptionLabel.widthAnchor.constraint(equalToConstant: self.frame.width-30).isActive = true
+        descriptionLabel.widthAnchor.constraint(equalToConstant: self.frame.width-35).isActive = true
         descriptionLabel.heightAnchor.constraint(equalToConstant: 40.0).isActive = true
         descriptionLabel.text  = "none product :("
         descriptionLabel.textAlignment = .left
